@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Profipol - Пенобетонные работы</title>
+    
+    <title>Profipol</title>
+    
+    <link rel="icon" href="logo.png" type="image/png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -24,10 +28,8 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
         
-        /* Убираем синее выделение при тапе на мобильных */
         * { -webkit-tap-highlight-color: transparent; }
 
-        /* FIX: Запрет горизонтальной прокрутки и перенос слов */
         html, body { 
             width: 100%; 
             max-width: 100%; 
@@ -38,7 +40,6 @@
             scroll-behavior: smooth;
         }
 
-        /* Перенос длинных слов (для RU версии на мобильных) */
         h1, h2, h3, h4, h5, h6, p, span, div, strong {
             overflow-wrap: break-word;
             word-wrap: break-word;
@@ -54,10 +55,9 @@
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         .section { padding: 100px 0; }
         
-        /* FIX: Увеличен отступ снизу для заголовков секций */
         .section-title { 
             text-align: center; 
-            margin-bottom: 50px; /* Было 20px, стало 50px */
+            margin-bottom: 50px; 
             font-size: 2.5rem; 
             color: var(--text-light); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
         }
@@ -80,7 +80,11 @@
             backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.05);
         }
         nav { display: flex; justify-content: space-between; align-items: center; height: 80px; }
-        .logo { font-size: 1.8rem; font-weight: 800; color: var(--text-light); display: flex; align-items: center; letter-spacing: 1px; }
+        
+        .logo { 
+            font-size: 1.8rem; font-weight: 800; color: var(--text-light); 
+            display: flex; align-items: center; letter-spacing: 1px; 
+        }
         .logo span { color: var(--primary-color); margin-left: 2px; }
 
         .nav-links { display: flex; gap: 30px; align-items: center; }
@@ -176,7 +180,6 @@
 
         .select-wrapper { position: relative; }
         
-        /* Стрелочка статична */
         .select-wrapper::after {
             content: '\f078'; font-family: 'Font Awesome 5 Free'; font-weight: 900;
             position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
@@ -243,15 +246,13 @@
             .nav-links a { font-size: 1.5rem; margin-bottom: 20px; }
             
             .hero-content h1 { font-size: 2rem; }
-            /* Уменьшаем отступ заголовка на мобильных, чтобы не было дыры */
             .section-title { font-size: 2rem; margin-bottom: 40px; }
             
             .methodology-grid, .contact-grid, .contact-form { grid-template-columns: 1fr; }
             
-            /* FIX: Изменение порядка блоков в контактах на мобильном */
             .contact-form-container {
-                order: -1; /* Ставим форму выше */
-                margin-bottom: 50px; /* Добавляем отступ снизу до контактов */
+                order: -1; 
+                margin-bottom: 50px; 
             }
 
             .ctrl-btn { width: 50px; font-size: 1.5rem; } 
@@ -265,15 +266,15 @@
         <div class="container">
             <nav>
                 <div class="logo">
-                    <i class="fas fa-layer-group" style="margin-right:10px; color:#ff8c00;"></i>
+                    <img src="logo.png" alt="Profipol Logo" style="height: 50px; margin-right: 15px;">
                     PROFI<span>POL</span>
                 </div>
                 
                 <div class="nav-links" id="navLinks">
-                    <a href="#about" onclick="closeMenu()" data-i18n="nav_material">Материал</a>
-                    <a href="#company" onclick="closeMenu()" data-i18n="nav_company">Почему мы</a>
-                    <a href="#calculator" onclick="closeMenu()" data-i18n="nav_calc">Калькулятор</a>
-                    <a href="#contact" onclick="closeMenu()" data-i18n="nav_contact">Контакты</a>
+                    <a href="#about" onclick="closeMenu()" data-i18n="nav_material">Vorteile</a>
+                    <a href="#company" onclick="closeMenu()" data-i18n="nav_company">Warum Wir</a>
+                    <a href="#calculator" onclick="closeMenu()" data-i18n="nav_calc">Rechner</a>
+                    <a href="#contact" onclick="closeMenu()" data-i18n="nav_contact">Kontakt</a>
                     
                     <div class="lang-switch">
                         <button class="lang-btn active" onclick="setLang('de')">DE</button>
@@ -293,47 +294,47 @@
 
     <section class="hero">
         <div class="container hero-content">
-            <h1 data-i18n="hero_title">Современная стяжка из пенобетона</h1>
-            <p data-i18n="hero_subtitle">Идеально ровный пол с тепло- и звукоизоляцией для вашего дома или офиса.</p>
-            <a href="#calculator" class="btn" data-i18n="hero_btn">Рассчитать стоимость</a>
+            <h1 data-i18n="hero_title">Moderner Schaumbeton Estrich</h1>
+            <p data-i18n="hero_subtitle">Perfekt ebener Boden mit Wärme- und Schalldämmung.</p>
+            <a href="#calculator" class="btn" data-i18n="hero_btn">Preis berechnen</a>
         </div>
     </section>
 
     <section id="about" class="section material-section">
         <div class="container">
-            <h2 class="section-title" data-i18n="adv_title">Преимущества пенобетона</h2>
-            <p class="section-subtitle" data-i18n="adv_subtitle">Инновационный материал будущего</p>
+            <h2 class="section-title" data-i18n="adv_title">Vorteile von Schaumbeton</h2>
+            <p class="section-subtitle" data-i18n="adv_subtitle">Innovativer Baustoff der Zukunft</p>
             
             <div class="cards-grid">
                 <div class="info-card">
                     <i class="fas fa-feather-alt card-icon"></i>
-                    <h3 data-i18n="c1_title">Ультра Легкий</h3>
-                    <p data-i18n="c1_text">Вес всего 280 кг/м³. В 8 раз легче обычного бетона. Идеально для старых перекрытий и мансард.</p>
+                    <h3 data-i18n="c1_title">Ultra Leicht</h3>
+                    <p data-i18n="c1_text">Nur ca. 280 kg/m³. 8x leichter als normaler Beton. Ideal für Altbausanierungen.</p>
                 </div>
                 <div class="info-card">
                     <i class="fas fa-thermometer-half card-icon"></i>
-                    <h3 data-i18n="c2_title">Теплоизоляция</h3>
-                    <p data-i18n="c2_text">Коэффициент теплопроводности 0.07 W/mK. Заменяет утеплитель, экономит ваши деньги на отоплении.</p>
+                    <h3 data-i18n="c2_title">Wärmedämmung</h3>
+                    <p data-i18n="c2_text">Wärmeleitfähigkeit 0.07 W/mK. Spart Heizkosten.</p>
                 </div>
                 <div class="info-card">
                     <i class="fas fa-volume-mute card-icon"></i>
-                    <h3 data-i18n="c3_title">Шумоизоляция</h3>
-                    <p data-i18n="c3_text">Пористая ячеистая структура поглощает звуковые волны и гасит ударный шум между этажами.</p>
+                    <h3 data-i18n="c3_title">Schalldämmung</h3>
+                    <p data-i18n="c3_text">Die poröse Struktur absorbiert Schallwellen effizient.</p>
                 </div>
                 <div class="info-card">
                     <i class="fas fa-leaf card-icon"></i>
-                    <h3 data-i18n="c4_title">Экологичность</h3>
-                    <p data-i18n="c4_text">Состоит только из цемента, воды и органической пены. Никакой химии и вредных испарений.</p>
+                    <h3 data-i18n="c4_title">Ökologisch</h3>
+                    <p data-i18n="c4_text">Besteht aus Zement, Wasser und organischem Schaum. Keine Chemie.</p>
                 </div>
                 <div class="info-card">
                     <i class="fas fa-fire-extinguisher card-icon"></i>
-                    <h3 data-i18n="c5_title">Пожаробезопасность</h3>
-                    <p data-i18n="c5_text">Класс огнестойкости A1. Материал полностью негорючий и препятствует распространению огня.</p>
+                    <h3 data-i18n="c5_title">Brandschutz</h3>
+                    <p data-i18n="c5_text">Brandschutzklasse A1. Nicht brennbar.</p>
                 </div>
                 <div class="info-card">
                     <i class="fas fa-water card-icon"></i>
-                    <h3 data-i18n="c6_title">Самовыравнивание</h3>
-                    <p data-i18n="c6_text">Жидкая консистенция позволяет создать идеально ровную поверхность, заполняя все пустоты.</p>
+                    <h3 data-i18n="c6_title">Selbstnivellierend</h3>
+                    <p data-i18n="c6_text">Fließt in jeden Winkel und schafft eine ebene Fläche.</p>
                 </div>
             </div>
         </div>
@@ -341,23 +342,23 @@
 
     <section id="company" class="section methodology-section">
         <div class="container">
-            <h2 class="section-title" data-i18n="why_title">Наш подход к работе</h2>
-            <p class="section-subtitle" data-i18n="why_subtitle">Почему выбирают Profipol?</p>
+            <h2 class="section-title" data-i18n="why_title">Unsere Arbeitsweise</h2>
+            <p class="section-subtitle" data-i18n="why_subtitle">Warum Profipol wählen?</p>
 
             <div class="methodology-grid">
                 <div>
                     <div class="method-item">
                         <div class="method-icon-box"><i class="fas fa-flask"></i></div>
                         <div class="method-text">
-                            <h4 data-i18n="m1_title">Подбор материалов</h4>
-                            <p data-i18n="m1_text">Мы используем только сертифицированный цемент D500 и качественный пенообразователь. Раствор готовится прямо на объекте в специальной мобильной станции.</p>
+                            <h4 data-i18n="m1_title">Materialauswahl</h4>
+                            <p data-i18n="m1_text">Wir wählen unsere Rohstoffe streng aus: hochwertiger zertifizierter D500 Zement, Premium-Polypropylenfasern zur Armierung und organische Proteinschaumbildner. Diese Kombination garantiert maximale Festigkeit und Langlebigkeit des Estrichs.</p>
                         </div>
                     </div>
                     <div class="method-item">
                         <div class="method-icon-box"><i class="fas fa-drafting-compass"></i></div>
                         <div class="method-text">
-                            <h4 data-i18n="m2_title">Соблюдение DIN и СНиП</h4>
-                            <p data-i18n="m2_text">Машинный метод укладки — самый прогрессивный. Мы строго следуем немецким стандартам DIN. Это исключает усадку и трещины.</p>
+                            <h4 data-i18n="m2_title">DIN Standards</h4>
+                            <p data-i18n="m2_text">Unser vollautomatisches maschinelles Verfahren folgt streng den deutschen Standards der DIN 18560. Diese präzise Technologie garantiert eine homogene Mischung, schließt menschliche Fehler aus und verhindert Risse oder Schrumpfung.</p>
                         </div>
                     </div>
                 </div>
@@ -365,15 +366,15 @@
                     <div class="method-item">
                         <div class="method-icon-box"><i class="fas fa-hard-hat"></i></div>
                         <div class="method-text">
-                            <h4 data-i18n="m3_title">Знаем тонкости работы</h4>
-                            <p data-i18n="m3_text">За нашими плечами более 100,000 м² выполненных полов. Мы знаем, как работать в сложных условиях, на высоких этажах и в старом фонде.</p>
+                            <h4 data-i18n="m3_title">Erfahrung</h4>
+                            <p data-i18n="m3_text">Mit über 16 Jahren Erfahrung und mehr als 100.000 m² erfolgreich verlegten Böden hat unser Team jede Nuance gemeistert. Wir bewältigen souverän komplexe Projekte, Hochhäuser und schwierige Altbausanierungen.</p>
                         </div>
                     </div>
                     <div class="method-item">
                         <div class="method-icon-box"><i class="fas fa-heart"></i></div>
                         <div class="method-text">
-                            <h4 data-i18n="m4_title">Любим свою работу</h4>
-                            <p data-i18n="m4_text">Мы не просто льем бетон, мы создаем основу вашего комфорта. Вы получаете идеально ровный пол, готовый к финишному покрытию.</p>
+                            <h4 data-i18n="m4_title">Leidenschaft</h4>
+                            <p data-i18n="m4_text">Wir gehen jedes Projekt mit Leidenschaft und Liebe zum Detail an. Wir behandeln Ihren Boden so, als wäre es unser eigener, und sorgen für eine perfekt ebene Oberfläche, die sofort bereit für den endgültigen Bodenbelag ist.</p>
                         </div>
                     </div>
                 </div>
@@ -383,35 +384,35 @@
 
     <section id="calculator" class="section calculator-section">
         <div class="container">
-            <h2 class="section-title" data-i18n="calc_title">Онлайн Калькулятор</h2>
+            <h2 class="section-title" data-i18n="calc_title">Online Rechner</h2>
             <div class="calc-container">
                 
                 <div class="form-group">
-                    <label data-i18n="calc_area_label">Площадь помещения (м²)</label>
+                    <label data-i18n="calc_area_label">Fläche (m²)</label>
                     <div class="number-control">
                         <button class="ctrl-btn" onclick="changeArea(-1)"><i class="fas fa-minus"></i></button>
-                        <input type="number" id="areaInput" class="custom-input" value="50" oninput="calculate()">
+                        <input type="number" id="areaInput" class="custom-input" value="0" oninput="calculate()">
                         <button class="ctrl-btn" onclick="changeArea(1)"><i class="fas fa-plus"></i></button>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label data-i18n="calc_thickness_label">Толщина слоя (см)</label>
+                    <label data-i18n="calc_thickness_label">Dicke (cm)</label>
                     <div class="select-wrapper">
                         <select id="thicknessInput" class="custom-select" onchange="calculate(); this.blur();">
-                            <option value="5" data-i18n="opt_5">5 cm (Минимум)</option>
-                            <option value="8" data-i18n="opt_8">8 cm (Стандарт)</option>
-                            <option value="10" selected data-i18n="opt_10">10 cm (Рекомендуем)</option>
-                            <option value="15" data-i18n="opt_15">15 cm (Усиленная)</option>
-                            <option value="20" data-i18n="opt_20">20 cm (Максимум)</option>
+                            <option value="5" data-i18n="opt_5">5 cm (Minimum)</option>
+                            <option value="8" data-i18n="opt_8">8 cm (Standard)</option>
+                            <option value="10" selected data-i18n="opt_10">10 cm (Empfohlen)</option>
+                            <option value="15" data-i18n="opt_15">15 cm (Verstärkt)</option>
+                            <option value="20" data-i18n="opt_20">20 cm (Maximum)</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="result-box">
-                    <p data-i18n="calc_result_label" style="color:#aaa;">Ориентировочная стоимость:</p>
+                    <p data-i18n="calc_result_label" style="color:#aaa;">Geschätzter Preis:</p>
                     <div class="price-value" id="priceDisplay">0 €</div>
-                    <span class="price-note" data-i18n="calc_note">*Цена является предварительной.</span>
+                    <span class="price-note" data-i18n="calc_note">*Dies ist eine unverbindliche Schätzung.</span>
                 </div>
 
             </div>
@@ -420,11 +421,11 @@
 
     <section id="contact" class="section contact-section">
         <div class="container">
-            <h2 class="section-title" data-i18n="contact_subtitle">Свяжитесь с нами</h2>
+            <h2 class="section-title" data-i18n="contact_subtitle">Sprechen Sie uns an</h2>
             
             <div class="contact-grid">
                 <div class="contact-details">
-                    <h3 data-i18n="contact_title" style="color:var(--text-light); margin-bottom:30px;">Контакты</h3>
+                    <h3 data-i18n="contact_title" style="color:var(--text-light); margin-bottom:30px;">Kontakt</h3>
                     <div class="contact-item">
                         <i class="fas fa-map-marker-alt"></i>
                         <div><strong data-i18n="contact_addr_label">Adresse:</strong><br> Musterstraße 1, 10115 Berlin</div>
@@ -463,7 +464,7 @@
                         </div>
                         
                         <div class="full-width" style="margin-top:10px;">
-                            <button class="btn" style="width:100%;" data-i18n="form_btn">Nachricht senden</button>
+                            <button class="btn" style="width:100%;" data-i18n="form_btn">Senden</button>
                         </div>
                     </form>
                 </div>
@@ -532,7 +533,7 @@
                 opt_5: "5 cm (Minimum)", opt_8: "8 cm (Standard)", opt_10: "10 cm (Empfohlen)", opt_15: "15 cm (Verstärkt)", opt_20: "20 cm (Maximum)",
                 
                 contact_title: "Kontakt", contact_subtitle: "Sprechen Sie uns an", 
-                contact_addr_label: "Adresse:", contact_phone_label: "Telefon:",
+                contact_addr_label: "Adresse:", contact_phone_label: "Telefon:", 
                 form_privacy: "Ich stimme der Datenschutzerklärung zu.", form_btn: "Senden",
                 ph_name: "Vorname", ph_last: "Nachname", ph_email: "Email Adresse", ph_phone: "Telefon Nummer", ph_msg: "Ihre Nachricht"
             },
@@ -582,14 +583,14 @@
                 m1_title: "Подбор материалов", 
                 m1_text: "Мы строго отбираем сырье: высокомарочный сертифицированный цемент D500, премиальное фиброволокно для армирования и органические белковые пенообразователи. Эта комбинация гарантирует максимальную прочность и долговечность стяжки.",
                 m2_title: "Соблюдение DIN", 
-                m2_text: "Наш полностью автоматизированный машинный процесс строго следует немецким стандартам DIN 18560. Эта точная технология гарантує однородную смесь, исключает человеческие ошибки и предотвращает появление трещин или усадку.",
+                m2_text: "Наш полностью автоматизированный машинный процесс строго следует немецким стандартам DIN 18560. Эта точная технология гарантирует однородную смесь, исключает человеческие ошибки и предотвращает появление трещин или усадку.",
                 m3_title: "Опыт", 
                 m3_text: "Имея более 16 лет опыта и свыше 100 000 м² успешно уложенных полов, наша команда освоила каждый нюанс. Мы уверенно беремся за сложные проекты, высотные здания и непростые объекты реконструкции.",
                 m4_title: "Любим работу", 
                 m4_text: "Мы подходим к каждому проекту со страстью и вниманием к деталям. Мы относимся к вашему полу как к своему собственному, обеспечивая идеально ровную поверхность, которая сразу готова к финишному покрытию.",
                 
-                calc_title: "Онлайн Калькулятор", calc_area_label: "Площадь (м²)", calc_thickness_label: "Толщина (см)", calc_result_label: "Ориентировочная цена:", calc_note: "*Цена является предварительной.",
-                opt_5: "5 см (Минимум)", opt_8: "8 см (Стандарт)", opt_10: "10 см (Рекомендуємо)", opt_15: "15 см (Усиленная)", opt_20: "20 см (Максимум)",
+                calc_title: "Онлайн Калькулятор", calc_area_label: "Площа (м²)", calc_thickness_label: "Толщина (см)", calc_result_label: "Ориентировочная цена:", calc_note: "*Цена является предварительной.",
+                opt_5: "5 см (Минимум)", opt_8: "8 см (Стандарт)", opt_10: "10 см (Рекомендуем)", opt_15: "15 см (Усиленная)", opt_20: "20 см (Максимум)",
                 
                 contact_title: "Контакты", contact_subtitle: "Свяжитесь с нами", 
                 contact_addr_label: "Адрес:", contact_phone_label: "Телефон:", 
