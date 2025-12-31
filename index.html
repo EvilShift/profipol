@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Profipol</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --primary-color: #ff8c00; /* Теплый насыщенный оранжевый */
+            --primary-hover: #e67e22;
+            --secondary-color: #2d3436; 
+            --bg-dark: #121212; 
+            --bg-card: #1e1e1e; 
+            --text-light: #ffffff;
+            --text-gray: #b2bec3;
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
+        
+        /* Убираем синее выделение при тапе на мобильных */
+        * { -webkit-tap-highlight-color: transparent; }
+
+        /* FIX: Запрет горизонтальной прокрутки и перенос слов */
+        html, body { 
+            width: 100%; 
+            max-width: 100%; 
+            overflow-x: hidden; 
+            background-color: var(--bg-dark); 
+            color: var(--text-light); 
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* Перенос длинных слов (для RU версии на мобильных) */
+        h1, h2, h3, h4, h5, h6, p, span, div, strong {
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            -ms-word-break: break-all;
+            word-break: break-word;
+            hyphens: auto;
+        }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+        
+        /* --- UTILS --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .section { padding: 100px 0; }
+        .section-title { 
+            text-align: center; margin-bottom: 20px; font-size: 2.5rem; 
+            color: var(--text-light); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .section-subtitle {
+            text-align: center; margin-bottom: 60px; color: var(--primary-color);
+            font-size: 1.2rem; font-weight: 500;
+        }
+        .btn {
+            display: inline-block; background: var(--primary-color); color: #fff;
+            padding: 16px 40px; border-radius: 50px; font-weight: 700; border: none; cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 140, 0, 0.4); text-transform: uppercase; letter-spacing: 1px;
+        }
+        .btn:hover { background: var(--primary-hover); transform: translateY(-3px); box-shadow: 0 8px 20px rgba(255, 140, 0, 0.6); }
+
+        /* --- HEADER --- */
+        header {
+            background: rgba(18, 18, 18, 0.95);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+            position: fixed; width: 100%; top: 0; z-index: 1000;
+            backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        nav { display: flex; justify-content: space-between; align-items: center; height: 80px; }
+        .logo { font-size: 1.8rem; font-weight: 800; color: var(--text-light); display: flex; align-items: center; letter-spacing: 1px; }
+        .logo span { color: var(--primary-color); margin-left: 2px; }
+
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-links a { font-weight: 600; font-size: 0.95rem; text-transform: uppercase; }
+        .nav-links a:hover { color: var(--primary-color); }
+
+        .lang-switch { display: flex; gap: 8px; margin-left: 20px; }
+        .lang-btn {
+            background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text-gray);
+            padding: 5px 10px; cursor: pointer; border-radius: 4px; font-size: 0.8rem; font-weight: 600; transition: var(--transition);
+        }
+        .lang-btn:hover, .lang-btn.active { border-color: var(--primary-color); color: var(--primary-color); }
+
+        .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 6px; z-index: 1100; }
+        .bar { width: 30px; height: 3px; background-color: var(--text-light); border-radius: 2px; transition: var(--transition); }
+
+        /* --- HERO --- */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1590069261209-f8e9b8642343?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover; background-position: center;
+            display: flex; align-items: center; justify-content: center; text-align: center; padding-top: 80px;
+        }
+        .hero-content { max-width: 900px; padding: 20px; }
+        .hero-content h1 { font-size: 3.5rem; margin-bottom: 20px; line-height: 1.2; text-transform: uppercase; }
+        .hero-content p { font-size: 1.3rem; margin-bottom: 40px; color: var(--text-gray); }
+
+        /* --- SECTIONS COMMON --- */
+        .material-section { background-color: var(--bg-dark); }
+        .methodology-section { background-color: #181818; }
+        
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .info-card {
+            background: var(--bg-card); padding: 40px 30px; border-radius: var(--radius); transition: var(--transition);
+            border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; align-items: flex-start;
+            width: 100%;
+        }
+        .info-card:hover { transform: translateY(-10px); background: #252525; border-color: var(--primary-color); }
+        .card-icon { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 20px; }
+        .info-card h3 { font-size: 1.3rem; margin-bottom: 15px; color: var(--text-light); }
+        .info-card p { color: var(--text-gray); font-size: 0.95rem; line-height: 1.7; }
+
+        .methodology-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+        .method-item { margin-bottom: 50px; display: flex; gap: 20px; }
+        .method-icon-box {
+            min-width: 60px; height: 60px; border: 2px solid var(--primary-color); border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--primary-color);
+            flex-shrink: 0;
+        }
+        .method-text h4 { font-size: 1.3rem; margin-bottom: 10px; color: var(--text-light); }
+        .method-text p { color: var(--text-gray); font-size: 0.95rem; }
+
+        /* --- CALCULATOR --- */
+        .calculator-section {
+            background: linear-gradient(135deg, #1e1e1e 0%, #121212 100%);
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .calc-container {
+            max-width: 600px; margin: 0 auto; background: #252525; padding: 40px;
+            border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .form-group { margin-bottom: 30px; }
+        .form-group label { 
+            display: block; margin-bottom: 12px; font-weight: 700; 
+            color: var(--primary-color); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type=number] { -moz-appearance: textfield; }
+
+        .number-control {
+            display: flex; align-items: center; justify-content: space-between;
+            background: #121212; border: 2px solid #444; border-radius: 10px; overflow: hidden;
+            transition: var(--transition);
+        }
+        .number-control:focus-within { border-color: var(--primary-color); box-shadow: 0 0 10px rgba(255,140,0,0.1); }
+        
+        .ctrl-btn {
+            width: 60px; height: 55px; background: transparent; border: none; 
+            color: var(--primary-color); font-size: 1.5rem; cursor: pointer; transition: 0.2s; 
+            display: flex; align-items: center; justify-content: center;
+        }
+        .ctrl-btn:hover { background: rgba(255, 140, 0, 0.1); }
+        .ctrl-btn:active { transform: scale(0.95); }
+
+        .custom-input {
+            width: 100%; height: 55px; background: transparent; border: none;
+            color: #fff; font-size: 1.5rem; text-align: center; font-weight: 600; outline: none;
+        }
+
+        .select-wrapper { position: relative; }
+        
+        /* Стрелочка статична */
+        .select-wrapper::after {
+            content: '\f078'; font-family: 'Font Awesome 5 Free'; font-weight: 900;
+            position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+            color: var(--primary-color); 
+            pointer-events: none;
+            transition: color 0.3s ease;
+        }
+        
+        .select-wrapper:focus-within::after { 
+            color: #fff;
+        }
+
+        .custom-select {
+            width: 100%; height: 55px; padding: 0 50px 0 20px;
+            background: #121212; border: 2px solid #444; border-radius: 10px; color: #fff; font-size: 1.1rem;
+            cursor: pointer; appearance: none; -webkit-appearance: none; -moz-appearance: none;
+            outline: none; transition: var(--transition);
+        }
+        .custom-select:focus { border-color: var(--primary-color); }
+
+        .result-box {
+            margin-top: 40px; padding: 30px; background: rgba(255, 140, 0, 0.05);
+            border: 1px solid var(--primary-color); border-radius: 12px; text-align: center;
+        }
+        .price-value { font-size: 3.5rem; font-weight: 800; color: var(--text-light); margin: 10px 0; }
+        .price-note { display: block; font-size: 0.8rem; color: #777; }
+
+        /* --- CONTACT --- */
+        .contact-section { background: #000; }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 60px; }
+        .contact-item { display: flex; align-items: center; margin-bottom: 25px; }
+        .contact-item i { width: 40px; height: 40px; background: rgba(255, 140, 0, 0.1); color: var(--primary-color); display: flex; align-items: center; justify-content: center; border-radius: 50%; margin-right: 15px; flex-shrink: 0; }
+        
+        .contact-form { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .full-width { grid-column: 1 / -1; }
+        .contact-form input, .contact-form textarea {
+            width: 100%; padding: 15px; background: #111; border: 1px solid #333; color: #fff; border-radius: 8px; font-size: 1rem;
+        }
+        .contact-form input:focus, .contact-form textarea:focus { border-color: var(--primary-color); outline: none; }
+        
+        .checkbox-wrapper { 
+            display: flex; align-items: center; justify-content: flex-start; gap: 15px; 
+            color: #888; font-size: 0.85rem; margin-top: 10px;
+        }
+        .checkbox-wrapper input[type="checkbox"] {
+            width: 20px; height: 20px; cursor: pointer; margin: 0; flex-shrink: 0;
+            accent-color: var(--primary-color);
+        }
+        .checkbox-wrapper label { cursor: pointer; text-align: left; margin: 0; }
+
+        /* --- FOOTER --- */
+        footer { background: #0a0a0a; padding: 40px 0; text-align: center; color: #555; font-size: 0.9rem; border-top: 1px solid #1a1a1a; }
+        footer span { color: var(--primary-color); }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 968px) {
+            .hamburger { display: flex; }
+            .nav-links {
+                position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
+                background: #121212; flex-direction: column; justify-content: center; transition: 0.4s; padding: 40px;
+                overflow-y: auto; 
+            }
+            .nav-links.active { right: 0; }
+            .nav-links a { font-size: 1.5rem; margin-bottom: 20px; }
+            
+            .hero-content h1 { font-size: 2rem; }
+            .section-title { font-size: 2rem; }
+            
+            .methodology-grid, .contact-grid, .contact-form { grid-template-columns: 1fr; }
+            .ctrl-btn { width: 50px; font-size: 1.5rem; } 
+            .custom-input { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-layer-group" style="margin-right:10px; color:#ff8c00;"></i>
+                    PROFI<span>POL</span>
+                </div>
+                
+                <div class="nav-links" id="navLinks">
+                    <a href="#about" onclick="closeMenu()" data-i18n="nav_material">Материал</a>
+                    <a href="#company" onclick="closeMenu()" data-i18n="nav_company">Почему мы</a>
+                    <a href="#calculator" onclick="closeMenu()" data-i18n="nav_calc">Калькулятор</a>
+                    <a href="#contact" onclick="closeMenu()" data-i18n="nav_contact">Контакты</a>
+                    
+                    <div class="lang-switch">
+                        <button class="lang-btn active" onclick="setLang('de')">DE</button>
+                        <button class="lang-btn" onclick="setLang('ua')">UA</button>
+                        <button class="lang-btn" onclick="setLang('ru')">RU</button>
+                    </div>
+                </div>
+
+                <div class="hamburger" onclick="toggleMenu()">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container hero-content">
+            <h1 data-i18n="hero_title">Современная стяжка из пенобетона</h1>
+            <p data-i18n="hero_subtitle">Идеально ровный пол с тепло- и звукоизоляцией для вашего дома или офиса.</p>
+            <a href="#calculator" class="btn" data-i18n="hero_btn">Рассчитать стоимость</a>
+        </div>
+    </section>
+
+    <section id="about" class="section material-section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="adv_title">Преимущества пенобетона</h2>
+            <p class="section-subtitle" data-i18n="adv_subtitle">Инновационный материал будущего</p>
+            
+            <div class="cards-grid">
+                <div class="info-card">
+                    <i class="fas fa-feather-alt card-icon"></i>
+                    <h3 data-i18n="c1_title">Ультра Легкий</h3>
+                    <p data-i18n="c1_text">Вес всего 280 кг/м³. В 8 раз легче обычного бетона. Идеально для старых перекрытий и мансард.</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-thermometer-half card-icon"></i>
+                    <h3 data-i18n="c2_title">Теплоизоляция</h3>
+                    <p data-i18n="c2_text">Коэффициент теплопроводности 0.07 W/mK. Заменяет утеплитель, экономит ваши деньги на отоплении.</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-volume-mute card-icon"></i>
+                    <h3 data-i18n="c3_title">Шумоизоляция</h3>
+                    <p data-i18n="c3_text">Пористая ячеистая структура поглощает звуковые волны и гасит ударный шум между этажами.</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-leaf card-icon"></i>
+                    <h3 data-i18n="c4_title">Экологичность</h3>
+                    <p data-i18n="c4_text">Состоит только из цемента, воды и органической пены. Никакой химии и вредных испарений.</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-fire-extinguisher card-icon"></i>
+                    <h3 data-i18n="c5_title">Пожаробезопасность</h3>
+                    <p data-i18n="c5_text">Класс огнестойкости A1. Материал полностью негорючий и препятствует распространению огня.</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-water card-icon"></i>
+                    <h3 data-i18n="c6_title">Самовыравнивание</h3>
+                    <p data-i18n="c6_text">Жидкая консистенция позволяет создать идеально ровную поверхность, заполняя все пустоты.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="company" class="section methodology-section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="why_title">Наш подход к работе</h2>
+            <p class="section-subtitle" data-i18n="why_subtitle">Почему выбирают Profipol?</p>
+
+            <div class="methodology-grid">
+                <div>
+                    <div class="method-item">
+                        <div class="method-icon-box"><i class="fas fa-flask"></i></div>
+                        <div class="method-text">
+                            <h4 data-i18n="m1_title">Подбор материалов</h4>
+                            <p data-i18n="m1_text">Мы используем только сертифицированный цемент D500 и качественный пенообразователь. Раствор готовится прямо на объекте в специальной мобильной станции.</p>
+                        </div>
+                    </div>
+                    <div class="method-item">
+                        <div class="method-icon-box"><i class="fas fa-drafting-compass"></i></div>
+                        <div class="method-text">
+                            <h4 data-i18n="m2_title">Соблюдение DIN и СНиП</h4>
+                            <p data-i18n="m2_text">Машинный метод укладки — самый прогрессивный. Мы строго следуем немецким стандартам DIN. Это исключает усадку и трещины.</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="method-item">
+                        <div class="method-icon-box"><i class="fas fa-hard-hat"></i></div>
+                        <div class="method-text">
+                            <h4 data-i18n="m3_title">Знаем тонкости работы</h4>
+                            <p data-i18n="m3_text">За нашими плечами более 100,000 м² выполненных полов. Мы знаем, как работать в сложных условиях, на высоких этажах и в старом фонде.</p>
+                        </div>
+                    </div>
+                    <div class="method-item">
+                        <div class="method-icon-box"><i class="fas fa-heart"></i></div>
+                        <div class="method-text">
+                            <h4 data-i18n="m4_title">Любим свою работу</h4>
+                            <p data-i18n="m4_text">Мы не просто льем бетон, мы создаем основу вашего комфорта. Вы получаете идеально ровный пол, готовый к финишному покрытию.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="calculator" class="section calculator-section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="calc_title">Онлайн Калькулятор</h2>
+            <div class="calc-container">
+                
+                <div class="form-group">
+                    <label data-i18n="calc_area_label">Площадь помещения (м²)</label>
+                    <div class="number-control">
+                        <button class="ctrl-btn" onclick="changeArea(-1)"><i class="fas fa-minus"></i></button>
+                        <input type="number" id="areaInput" class="custom-input" value="50" oninput="calculate()">
+                        <button class="ctrl-btn" onclick="changeArea(1)"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="calc_thickness_label">Толщина слоя (см)</label>
+                    <div class="select-wrapper">
+                        <select id="thicknessInput" class="custom-select" onchange="calculate(); this.blur();">
+                            <option value="5" data-i18n="opt_5">5 cm (Минимум)</option>
+                            <option value="8" data-i18n="opt_8">8 cm (Стандарт)</option>
+                            <option value="10" selected data-i18n="opt_10">10 cm (Рекомендуем)</option>
+                            <option value="15" data-i18n="opt_15">15 cm (Усиленная)</option>
+                            <option value="20" data-i18n="opt_20">20 cm (Максимум)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="result-box">
+                    <p data-i18n="calc_result_label" style="color:#aaa;">Ориентировочная стоимость:</p>
+                    <div class="price-value" id="priceDisplay">0 €</div>
+                    <span class="price-note" data-i18n="calc_note">*Цена является предварительной.</span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section contact-section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="contact_subtitle">Свяжитесь с нами</h2>
+            
+            <div class="contact-grid">
+                <div class="contact-details">
+                    <h3 data-i18n="contact_title" style="color:var(--text-light); margin-bottom:30px;">Контакты</h3>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div><strong data-i18n="contact_addr_label">Adresse:</strong><br> Musterstraße 1, 10115 Berlin</div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <div><strong data-i18n="contact_phone_label">Telefon:</strong><br> <a href="tel:+49123456789">+49 123 456 789</a></div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div><strong>Email:</strong><br> <a href="mailto:info@profipol.de">info@profipol.de</a></div>
+                    </div>
+                </div>
+
+                <div>
+                    <form class="contact-form" onsubmit="event.preventDefault(); alert('Message Sent!');">
+                        <div class="form-group" style="margin:0;">
+                            <input type="text" id="f_name" data-i18n-ph="ph_name" placeholder="Vorname" required>
+                        </div>
+                        <div class="form-group" style="margin:0;">
+                            <input type="text" id="f_last" data-i18n-ph="ph_last" placeholder="Nachname" required>
+                        </div>
+                        <div class="form-group full-width" style="margin:0;">
+                            <input type="email" id="f_email" data-i18n-ph="ph_email" placeholder="Email Adresse" required>
+                        </div>
+                        <div class="form-group full-width" style="margin:0;">
+                            <input type="tel" id="f_phone" data-i18n-ph="ph_phone" placeholder="Telefon Nummer">
+                        </div>
+                        <div class="form-group full-width" style="margin:0;">
+                            <textarea rows="4" id="f_msg" data-i18n-ph="ph_msg" placeholder="Ihre Nachricht" required></textarea>
+                        </div>
+                        
+                        <div class="full-width checkbox-wrapper">
+                            <input type="checkbox" required id="privacyCheck">
+                            <label for="privacyCheck" data-i18n="form_privacy">Ich stimme der Datenschutzerklärung zu.</label>
+                        </div>
+                        
+                        <div class="full-width" style="margin-top:10px;">
+                            <button class="btn" style="width:100%;" data-i18n="form_btn">Nachricht senden</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 PROFI<span>POL</span>. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- MOBILE MENU ---
+        function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
+        function closeMenu() { document.getElementById('navLinks').classList.remove('active'); }
+
+        // --- CALCULATOR LOGIC ---
+        function changeArea(amount) {
+            const input = document.getElementById('areaInput');
+            let val = parseInt(input.value) || 0;
+            val += amount;
+            if (val < 0) val = 0;
+            input.value = val;
+            calculate();
+        }
+
+        function calculate() {
+            const area = parseFloat(document.getElementById('areaInput').value) || 0;
+            const thickness = parseInt(document.getElementById('thicknessInput').value);
+            
+            // ЦЕНЫ (Примерные)
+            let basePrice = 15; 
+            let matPrice = thickness * 2.5; 
+            
+            let total = area * (basePrice + matPrice);
+            document.getElementById('priceDisplay').innerText = total.toLocaleString('de-DE') + " €";
+        }
+
+        // --- TRANSLATIONS ---
+        const translations = {
+            de: {
+                nav_material: "Vorteile", nav_company: "Warum Wir", nav_calc: "Rechner", nav_contact: "Kontakt",
+                hero_title: "Moderner Schaumbeton Estrich", hero_subtitle: "Perfekt ebener Boden mit Wärme- und Schalldämmung.", hero_btn: "Preis berechnen",
+                
+                adv_title: "Vorteile von Schaumbeton", adv_subtitle: "Innovativer Baustoff der Zukunft",
+                c1_title: "Ultra Leicht", c1_text: "Nur ca. 280 kg/m³. 8x leichter als normaler Beton. Ideal für Altbausanierungen.",
+                c2_title: "Wärmedämmung", c2_text: "Wärmeleitfähigkeit 0.07 W/mK. Spart Heizkosten.",
+                c3_title: "Schalldämmung", c3_text: "Die poröse Struktur absorbiert Schallwellen effizient.",
+                c4_title: "Ökologisch", c4_text: "Besteht aus Zement, Wasser und organischem Schaum. Keine Chemie.",
+                c5_title: "Brandschutz", c5_text: "Brandschutzklasse A1. Nicht brennbar.",
+                c6_title: "Selbstnivellierend", c6_text: "Fließt in jeden Winkel und schafft eine ebene Fläche.",
+                
+                why_title: "Unsere Arbeitsweise", why_subtitle: "Warum Profipol wählen?",
+                m1_title: "Materialauswahl", 
+                m1_text: "Wir wählen unsere Rohstoffe streng aus: hochwertiger zertifizierter D500 Zement, Premium-Polypropylenfasern zur Armierung und organische Proteinschaumbildner. Diese Kombination garantiert maximale Festigkeit und Langlebigkeit des Estrichs.",
+                m2_title: "DIN Standards", 
+                m2_text: "Unser vollautomatisches maschinelles Verfahren folgt streng den deutschen Standards der DIN 18560. Diese präzise Technologie garantiert eine homogene Mischung, schließt menschliche Fehler aus und verhindert Risse oder Schrumpfung.",
+                m3_title: "Erfahrung", 
+                m3_text: "Mit über 16 Jahren Erfahrung und mehr als 100.000 m² erfolgreich verlegten Böden hat unser Team jede Nuance gemeistert. Wir bewältigen souverän komplexe Projekte, Hochhäuser und schwierige Altbausanierungen.",
+                m4_title: "Leidenschaft", 
+                m4_text: "Wir gehen jedes Projekt mit Leidenschaft und Liebe zum Detail an. Wir behandeln Ihren Boden so, als wäre es unser eigener, und sorgen für eine perfekt ebene Oberfläche, die sofort bereit für den endgültigen Bodenbelag ist.",
+                
+                calc_title: "Online Rechner", calc_area_label: "Fläche (m²)", calc_thickness_label: "Dicke (cm)", calc_result_label: "Geschätzter Preis:", calc_note: "*Dies ist eine unverbindliche Schätzung.",
+                opt_5: "5 cm (Minimum)", opt_8: "8 cm (Standard)", opt_10: "10 cm (Empfohlen)", opt_15: "15 cm (Verstärkt)", opt_20: "20 cm (Maximum)",
+                
+                contact_title: "Kontakt", contact_subtitle: "Sprechen Sie uns an", 
+                contact_addr_label: "Adresse:", contact_phone_label: "Telefon:",
+                form_privacy: "Ich stimme der Datenschutzerklärung zu.", form_btn: "Senden",
+                ph_name: "Vorname", ph_last: "Nachname", ph_email: "Email Adresse", ph_phone: "Telefon Nummer", ph_msg: "Ihre Nachricht"
+            },
+            ua: {
+                nav_material: "Матеріал", nav_company: "Чому ми", nav_calc: "Калькулятор", nav_contact: "Контакти",
+                hero_title: "Сучасна стяжка з пінобетону", hero_subtitle: "Ідеально рівна підлога з тепло- та звукоізоляцією.", hero_btn: "Розрахувати ціну",
+                
+                adv_title: "Переваги пінобетону", adv_subtitle: "Інноваційний матеріал майбутнього",
+                c1_title: "Ультра легкий", c1_text: "Всього 280 кг/м³. У 8 разів легший за бетон. Ідеально для старих будівель.",
+                c2_title: "Теплоізоляція", c2_text: "Коефіцієнт 0.07 W/mK. Економить витрати на опалення.",
+                c3_title: "Шумоізоляція", c3_text: "Пориста структура ефективно поглинає звук.",
+                c4_title: "Екологічність", c4_text: "Цемент, вода та органічна піна. Без шкідливої хімії.",
+                c5_title: "Пожежобезпечність", c5_text: "Клас A1. Не горить і не поширює вогонь.",
+                c6_title: "Самовирівнювання", c6_text: "Рідка суміш заповнює всі нерівності.",
+                
+                why_title: "Наш підхід", why_subtitle: "Чому обирають Profipol?",
+                m1_title: "Матеріали", 
+                m1_text: "Ми суворо відбираємо сировину: високоякісний сертифікований цемент D500, преміальне фіброволокно для армування та органічні білкові піноутворювачі. Ця комбінація гарантує максимальну міцність та довговічність стяжки.",
+                m2_title: "Стандарти DIN", 
+                m2_text: "Наш повністю автоматизований машинний процес суворо дотримується німецьких стандартів DIN 18560. Ця точна технологія гарантує однородную суміш, виключає людські помилки та запобігає появі тріщин або усадці при висиханні.",
+                m3_title: "Досвід", 
+                m3_text: "Маючи понад 16 років досвіду та більше 100 000 м² успішно укладених підлог, наша команда опанувала кожну деталь. Ми впевнено беремося за складні проекти, висотні будівлі та непрості об'єкти реконструкції.",
+                m4_title: "Любов до справи", 
+                m4_text: "Ми підходимо до кожного проекту з пристрастю та увагою до деталей. Ми ставимося до вашої підлоги як до своєї власної, забезпечуючи ідеально рівну поверхню, яка відразу готова до фінішного покриття.",
+                
+                calc_title: "Онлайн Калькулятор", calc_area_label: "Площа (м²)", calc_thickness_label: "Товщина (см)", calc_result_label: "Орієнтовна ціна:", calc_note: "*Ціна є попередньою.",
+                opt_5: "5 см (Мінімум)", opt_8: "8 см (Стандарт)", opt_10: "10 см (Рекомендуємо)", opt_15: "15 см (Посилена)", opt_20: "20 см (Максимум)",
+                
+                contact_title: "Контакти", contact_subtitle: "Зв'яжіться з нами", 
+                contact_addr_label: "Адреса:", contact_phone_label: "Телефон:", 
+                form_privacy: "Я погоджуюсь з політикою конфіденційності.", form_btn: "Надіслати",
+                ph_name: "Ім'я", ph_last: "Прізвище", ph_email: "Email адреса", ph_phone: "Номер телефону", ph_msg: "Ваше повідомлення"
+            },
+            ru: {
+                nav_material: "Материал", nav_company: "Почему мы", nav_calc: "Калькулятор", nav_contact: "Контакты",
+                hero_title: "Современная стяжка из пенобетона", hero_subtitle: "Идеально ровный пол с тепло- и звукоизоляцией.", hero_btn: "Рассчитать стоимость",
+                
+                adv_title: "Преимущества пенобетона", adv_subtitle: "Инновационный материал будущего",
+                c1_title: "Ультра Легкий", c1_text: "Вес всего 280 кг/м³. В 8 раз легче бетона. Идеально для реконструкции.",
+                c2_title: "Теплоизоляция", c2_text: "Коэффициент 0.07 W/mK. Работает как утеплитель.",
+                c3_title: "Шумоизоляция", c3_text: "Пористая структура гасит ударный шум.",
+                c4_title: "Экологичность", c4_text: "Только цемент, вода и пена. Никакой вредной химии.",
+                c5_title: "Пожаробезопасность", c5_text: "Класс A1. Полностью негорючий материал.",
+                c6_title: "Самовыравнивание", c6_text: "Создает идеально ровную плоскость без перепадов.",
+                
+                why_title: "Наш подход", why_subtitle: "Почему выбирают Profipol?",
+                m1_title: "Подбор материалов", 
+                m1_text: "Мы строго отбираем сырье: высокомарочный сертифицированный цемент D500, премиальное фиброволокно для армирования и органические белковые пенообразователи. Эта комбинация гарантирует максимальную прочность и долговечность стяжки.",
+                m2_title: "Соблюдение DIN", 
+                m2_text: "Наш полностью автоматизированный машинный процесс строго следует немецким стандартам DIN 18560. Эта точная технология гарантує однородную смесь, исключает человеческие ошибки и предотвращает появление трещин или усадку.",
+                m3_title: "Опыт", 
+                m3_text: "Имея более 16 лет опыта и свыше 100 000 м² успешно уложенных полов, наша команда освоила каждый нюанс. Мы уверенно беремся за сложные проекты, высотные здания и непростые объекты реконструкции.",
+                m4_title: "Любим работу", 
+                m4_text: "Мы подходим к каждому проекту со страстью и вниманием к деталям. Мы относимся к вашему полу как к своему собственному, обеспечивая идеально ровную поверхность, которая сразу готова к финишному покрытию.",
+                
+                calc_title: "Онлайн Калькулятор", calc_area_label: "Площадь (м²)", calc_thickness_label: "Толщина (см)", calc_result_label: "Ориентировочная цена:", calc_note: "*Цена является предварительной.",
+                opt_5: "5 см (Минимум)", opt_8: "8 см (Стандарт)", opt_10: "10 см (Рекомендуем)", opt_15: "15 см (Усиленная)", opt_20: "20 см (Максимум)",
+                
+                contact_title: "Контакты", contact_subtitle: "Свяжитесь с нами", 
+                contact_addr_label: "Адрес:", contact_phone_label: "Телефон:", 
+                form_privacy: "Я согласен с политикой конфиденциальности.", form_btn: "Отправить",
+                ph_name: "Имя", ph_last: "Фамилия", ph_email: "Email адрес", ph_phone: "Номер телефона", ph_msg: "Ваше сообщение"
+            }
+        };
+
+        function setLang(lang) {
+            document.documentElement.lang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Text translation
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerText = translations[lang][key];
+                }
+            });
+
+            // Placeholder translation
+            const placeholders = document.querySelectorAll('[data-i18n-ph]');
+            placeholders.forEach(el => {
+                const key = el.getAttribute('data-i18n-ph');
+                if (translations[lang] && translations[lang][key]) {
+                    el.placeholder = translations[lang][key];
+                }
+            });
+        }
+
+        // Init
+        calculate();
+        setLang('de');
+    </script>
+</body>
+</html>
