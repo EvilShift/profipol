@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Profipol</title>
+    <title>Profipol - Пенобетонные работы</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -53,8 +53,12 @@
         /* --- UTILS --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         .section { padding: 100px 0; }
+        
+        /* FIX: Увеличен отступ снизу для заголовков секций */
         .section-title { 
-            text-align: center; margin-bottom: 20px; font-size: 2.5rem; 
+            text-align: center; 
+            margin-bottom: 50px; /* Было 20px, стало 50px */
+            font-size: 2.5rem; 
             color: var(--text-light); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
         }
         .section-subtitle {
@@ -239,9 +243,17 @@
             .nav-links a { font-size: 1.5rem; margin-bottom: 20px; }
             
             .hero-content h1 { font-size: 2rem; }
-            .section-title { font-size: 2rem; }
+            /* Уменьшаем отступ заголовка на мобильных, чтобы не было дыры */
+            .section-title { font-size: 2rem; margin-bottom: 40px; }
             
             .methodology-grid, .contact-grid, .contact-form { grid-template-columns: 1fr; }
+            
+            /* FIX: Изменение порядка блоков в контактах на мобильном */
+            .contact-form-container {
+                order: -1; /* Ставим форму выше */
+                margin-bottom: 50px; /* Добавляем отступ снизу до контактов */
+            }
+
             .ctrl-btn { width: 50px; font-size: 1.5rem; } 
             .custom-input { font-size: 1.2rem; }
         }
@@ -427,7 +439,7 @@
                     </div>
                 </div>
 
-                <div>
+                <div class="contact-form-container">
                     <form class="contact-form" onsubmit="event.preventDefault(); alert('Message Sent!');">
                         <div class="form-group" style="margin:0;">
                             <input type="text" id="f_name" data-i18n-ph="ph_name" placeholder="Vorname" required>
@@ -577,7 +589,7 @@
                 m4_text: "Мы подходим к каждому проекту со страстью и вниманием к деталям. Мы относимся к вашему полу как к своему собственному, обеспечивая идеально ровную поверхность, которая сразу готова к финишному покрытию.",
                 
                 calc_title: "Онлайн Калькулятор", calc_area_label: "Площадь (м²)", calc_thickness_label: "Толщина (см)", calc_result_label: "Ориентировочная цена:", calc_note: "*Цена является предварительной.",
-                opt_5: "5 см (Минимум)", opt_8: "8 см (Стандарт)", opt_10: "10 см (Рекомендуем)", opt_15: "15 см (Усиленная)", opt_20: "20 см (Максимум)",
+                opt_5: "5 см (Минимум)", opt_8: "8 см (Стандарт)", opt_10: "10 см (Рекомендуємо)", opt_15: "15 см (Усиленная)", opt_20: "20 см (Максимум)",
                 
                 contact_title: "Контакты", contact_subtitle: "Свяжитесь с нами", 
                 contact_addr_label: "Адрес:", contact_phone_label: "Телефон:", 
